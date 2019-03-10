@@ -24,8 +24,8 @@ import com.searchimages.shivam.imagesearch.api_handling.pojo.Value;
 
 public class ImageFragment extends Fragment {
 
-    private static final String KEY_IMAGE_RES = "app.test.myassignment.key.imageRes";
-    private static final String KEY_IMAGE_BYTE = "app.test.myassignment.key.imageByte";
+    private static final String KEY_IMAGE_RES = "com.searchimages.shivam.imagesearch.key.imageRes";
+    private static final String KEY_IMAGE_BYTE = "com.searchimages.shivam.imagesearch.key.imageByte";
 
     public static ImageFragment newInstance(Value drawableRes, int viewFrom) {
         ImageFragment fragment = new ImageFragment();
