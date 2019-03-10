@@ -15,7 +15,7 @@ public class CommonFunctions {
     public static final String imagesData = "Images";
     public static final String viewFrom = "viewFrom";
 
-    public static final String BingKey = "bf2e7054d8e24baf857f8db0a239be2c";
+    public static final String BingKey = "3a255fea07d941ef97e436c8541eb038";
 
     public static boolean checkInternetConnection(Context mContext) {
         ConnectivityManager conMgr = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);

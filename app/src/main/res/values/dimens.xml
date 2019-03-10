@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="grid_span_count2">2</integer>
+    <integer name="grid_span_count3">3</integer>
+    <integer name="grid_span_count4">4</integer>
+
+    <dimen name="image_size">120dp</dimen>
+
+</resources>

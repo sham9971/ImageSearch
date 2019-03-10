@@ -17,8 +17,9 @@
         android:paddingStart="8dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
-        app:layoutManager="GridLayoutManager"
-        app:spanCount="@integer/grid_span_count2" />
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="@integer/grid_span_count2"
+         />
 
     <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
         android:id="@+id/cir_loader"

@@ -49,9 +49,7 @@ import com.searchimages.shivam.imagesearch.ui_handling.MainActivity;
 import com.searchimages.shivam.imagesearch.ui_handling.adapter.GridAdapter;
 import retrofit2.Call;
 
-/**
- * A fragment for displaying a grid of images.
- */
+
 public class GridFragment extends Fragment implements ImageApiInterface.onApiFinishedListener {
     private View view;
     private EditText edt_search_term;
@@ -68,11 +66,11 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
     private int countOfRecords = 20;
     private int screenWidth;
     private String searchTerm = null;
-    /* Taken to avoid API call again and again if already any call's going on*/
+
     private boolean apiCalling = false;
-    /* Taken to avoid loading of API again and again on scroll of recycler view*/
+
     private boolean bottomFound = false;
-    // To check the image option to show from
+
     private int viewFrom = CommonFunctions.Online;
     private int TypeEditText = 1;
     private int TypePagination = 2;
@@ -97,7 +95,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_grid, container, false);
+        view = inflater.inflate(R.layout.fragement_grid, container, false);
         initializeData();
         if (imagesList.size() > 0) {
             setDataInGrid();
@@ -111,7 +109,6 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         scrollToPosition(MainActivity.currentPosition);
     }
 
-    /* Initializing Views */
     void initializeData() {
         if (api == null)
             api = APIClient.getClient().create(APIInterface.class);
@@ -127,7 +124,6 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
 
     /* Listeners */
     void implementingListener() {
-        //Search box imeOptions search click
         edt_search_term.setOnEditorActionListener((v, actionId, event) -> {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_SEARCH)) {
                 checkSearchValidationNCallAPI(TypeEditText);
@@ -135,7 +131,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
             return false;
         });
 
-        //Recycler scroll view
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -155,20 +151,17 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
                 scrollPosition = fistVisibleCurrentItem;
 
                 if ((onScreenVisibleItemCount + fistVisibleCurrentItem) >= totalItemCount && !bottomFound && viewFrom == CommonFunctions.Online) {
-                    //bottom of recycler view found
 
-                    //Taken to avoid bottom again on scroll for same api
                     bottomFound = true;
-                    //Position where we need to scroll list again after another API call
+
                     scrollPosition = totalItemCount;
-                    //API calling after checking data
+
                     checkSearchValidationNCallAPI(TypePagination);
                 }
 
             }
         });
 
-        // Search box right search icon click
         edt_search_term.setOnTouchListener((v, event) -> {
             final int DRAWABLE_RIGHT = 2;
             if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -181,11 +174,11 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         });
     }
 
-    /* Search box validations */
+   
     void checkSearchValidationNCallAPI(int typeOfSearch) {
         String searchTerm = edt_search_term.getText().toString().trim();
         if (!TextUtils.isEmpty(searchTerm)) {
-            //If searching for same item then show error
+
             if (typeOfSearch == TypeEditText && searchTerm.equalsIgnoreCase(this.searchTerm)) {
                 showSnackbar(getString(R.string.same_search));
                 bottomFound = false;
@@ -196,9 +189,8 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         } else bottomFound = false;
     }
 
-    /* Search box validations */
     void GetImagesList(String searchTerm) {
-        //Hiding Keyboard
+
         CommonFunctions.HideKeyboard(edt_search_term);
 
         if (CommonFunctions.checkInternetConnection(mContext)) {
@@ -218,10 +210,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         }
     }
 
-    /**
-     * Scrolls the recycler view to show the last viewed item in the grid. This is important when
-     * navigating back from the grid.
-     */
+
     private void scrollToPosition(int position) {
         recyclerView.addOnLayoutChangeListener(new OnLayoutChangeListener() {
             @Override
@@ -229,8 +218,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
                 recyclerView.removeOnLayoutChangeListener(this);
                 final RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                 View viewAtPosition = layoutManager.findViewByPosition(position);
-                // Scroll to position if the view for the current position is null (not currently part of
-                // layout manager children), or it's not completely visible.
+
                 if (viewAtPosition == null || layoutManager
                         .isViewPartiallyVisible(viewAtPosition, false, true)) {
                     recyclerView.post(() -> layoutManager.scrollToPosition(position));
@@ -240,34 +228,28 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         });
     }
 
-    /**
-     * Prepares the shared element transition to the pager fragment, as well as the other transitions
-     * that affect the flow.
-     */
-    private void prepareTransitions() {
-        setExitTransition(TransitionInflater.from(getContext())
-                .inflateTransition(R.transition.grid_exit_transition));
 
-        // A similar mapping is set at the ImagePagerFragment with a setEnterSharedElementCallback.
+    private void prepareTransitions() {
+
         setExitSharedElementCallback(
                 new SharedElementCallback() {
                     @Override
                     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                        // Locate the ViewHolder for the clicked position.
+
                         RecyclerView.ViewHolder selectedViewHolder = recyclerView
                                 .findViewHolderForAdapterPosition(MainActivity.currentPosition);
                         if (selectedViewHolder == null || selectedViewHolder.itemView == null) {
                             return;
                         }
 
-                        // Map the first shared element name to the child ImageView.
+
                         sharedElements
                                 .put(names.get(0), selectedViewHolder.itemView.findViewById(R.id.card_image));
                     }
                 });
     }
 
-    /* API success and data handling*/
+
     @Override
     public void onApiSuccess(ImageData response, String searchTermItem) {
         hideLoader();
@@ -290,7 +272,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         bottomFound = false;
     }
 
-    /* API failure and data handling */
+
     @Override
     public void onApiFailure(String message) {
         hideLoader();
@@ -300,7 +282,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
             showSnackbar(message);
     }
 
-    /* Set Data inside grid view and initiate transitions */
+
     void setDataInGrid() {
         int gridWidth = screenWidth / numberOfColumns - 50;
         if (imagesList.size() > 0) {
@@ -330,7 +312,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         apiCalling = true;
     }
 
-    /* To hide middle and bottom loaders */
+
     public void hideLoader() {
         loader.setVisibility(View.GONE);
         cir_loader.setVisibility(View.GONE);
@@ -341,15 +323,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
     }
 
-    /* Options Menu Management */
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if (imagesList.size() > 0) {
-            inflater.inflate(R.menu.menu_grid_columns_update, menu);
-            HandleVisibilityOfMenuOptions(menu);
-        }
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -369,14 +343,14 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         return false;
     }
 
-    /* Options Menu's visibility Handling */
+
     void HandleVisibilityOfMenuOptions(Menu menu) {
         menu.findItem(R.id.column_2).setVisible((numberOfColumns == 2) ? false : true);
         menu.findItem(R.id.column_3).setVisible((numberOfColumns == 3) ? false : true);
         menu.findItem(R.id.column_4).setVisible((numberOfColumns == 4) ? false : true);
     }
 
-    /* Options Menu Click Handling */
+
     void setOptionsMenuClick(int columns) {
         numberOfColumns = columns;
         setDataInGrid();
