@@ -13,7 +13,6 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
     private int viewFrom;
 
     public ImagePagerAdapter(Fragment fragment,List<Value> arrayImages,int viewFrom) {
-        // Note: Initialize with the child fragment manager.
         super(fragment.getChildFragmentManager());
         this.arrayImages=arrayImages;
         this.viewFrom=viewFrom;

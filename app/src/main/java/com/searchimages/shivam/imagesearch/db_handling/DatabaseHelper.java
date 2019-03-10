@@ -21,7 +21,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String databaseName = "ImageDB";
     private static final String TABLE_IMAGE = "ImageTable";
 
-    // Image Table Columns names
     private static final String COL_ID = "col_id";
     private static final String IMAGE_ID = "image_id";
     private static final String IMAGE_TAG = "image_tag";
@@ -45,7 +44,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        // Drop older table if existed
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
         onCreate(sqLiteDatabase);
     }

@@ -48,10 +48,10 @@ public class ImageFragment extends Fragment {
         int viewFrom = arguments.getInt(CommonFunctions.viewFrom);
         view.findViewById(R.id.image).setTransitionName(imageRes);
         if (viewFrom == CommonFunctions.Online) {
-            //Set Image from URL
+
             Picasso.with(getContext())
                     .load(imageRes)
-                    .into((ImageView) view.findViewById(R.id.image), new Callback() {
+                    .into( view.findViewById(R.id.image), new Callback() {
                         @Override
                         public void onSuccess() {
                             getParentFragment().startPostponedEnterTransition();
