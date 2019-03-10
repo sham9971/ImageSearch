@@ -63,7 +63,6 @@ public class ImageFragment extends Fragment {
                         }
                     });
         } else {
-            //Set image from local DB
             byte[] byteArray = arguments.getByteArray(KEY_IMAGE_BYTE);
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             Drawable bitmapDrawable = new BitmapDrawable(getContext().getResources(), bmp);

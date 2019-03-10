@@ -117,7 +117,6 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         loader = view.findViewById(R.id.loader);
         cir_loader = view.findViewById(R.id.cir_loader);
         edt_search_term = view.findViewById(R.id.edt_search_term);
-
         recyclerView = view.findViewById(R.id.recycler_view);
         implementingListener();
     }
@@ -294,7 +293,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
 
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
 
-            //Grid Transitions
+
             prepareTransitions();
             postponeEnterTransition();
 
@@ -305,7 +304,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         }
     }
 
-    /* To show middle and bottom loaders */
+
     public void showLoader() {
         loader.setVisibility(offset == 0 ? View.VISIBLE : View.GONE);
         cir_loader.setVisibility(offset > 0 ? View.VISIBLE : View.GONE);
@@ -324,6 +323,14 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (imagesList.size() > 0) {
+            inflater.inflate(R.menu.menu_grid_colums_update, menu);
+            HandleVisibilityOfMenuOptions(menu);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -370,9 +377,7 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
             Bitmap bitmap = null;
             value = values[0];
             try {
-                // Download Image from URL
                 InputStream input = new java.net.URL(values[0].getThumbnailUrl()).openStream();
-                // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -387,7 +392,6 @@ public class GridFragment extends Fragment implements ImageApiInterface.onApiFin
         }
     }
 
-    /* Load Data from DB Task */
     private class LoadImageFromDatabaseTask extends AsyncTask<String, Void, List<Value>> {
 
         protected void onPreExecute() {

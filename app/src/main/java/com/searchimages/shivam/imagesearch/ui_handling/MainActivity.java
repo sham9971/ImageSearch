@@ -10,7 +10,7 @@ import com.searchimages.shivam.imagesearch.ui_handling.fragement.GridFragment;
 public class MainActivity extends AppCompatActivity {
 
     public static int currentPosition;
-    private static final String KEY_CURRENT_POSITION = "app.test.myassignment.key.currentPosition";
+    private static final String KEY_CURRENT_POSITION = "com.searchimages.shivam.imagesearch.key.currentPosition";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
